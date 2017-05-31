@@ -5,9 +5,9 @@ info:
   description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Swagger API Team
-    email: foo@example.com
-    url: http://madskristensen.net
+    name: Pearson Cardinal Dashboard API
+    email: Chadwick.reimers@pearson.com
+    url: https://github.com/PearsonEducation/CardinalInstructordashboardAPIspec
   license:
     name: MIT
     url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
