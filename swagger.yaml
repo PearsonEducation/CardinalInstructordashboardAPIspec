@@ -2,7 +2,16 @@ swagger: "2.0"
 info:
   version: 1.0.0
   title: "Cardinal Instructor Dashboard"
-  description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification
+  description: |
+      The goal of this project is to provide more granular insights and visibility for instructors into student understanding of the learning objectives covered within their course sections.  Included within this supporting the following needs:
+      Quickly identify areas of need or support within their courses (answering the question - “Which learning objectives are my students struggling with?”).
+      
+        Identify trends across courses where students are students are collectively struggling (helping answer the question - “Is there an issue with the course content or instructional items being covered?”).
+      
+        Provide a more comprehensive view into student mastery of the applicable learning objectives.  Rather than simply look at student mastery scores based on quiz performance, also incorporate student dialog interactions with Watson as a secondary data point to view student mastery scores in order to determine benefits of Watson interaction, provide additional insights into student progression towards mastery, etc. 
+      
+        The long term vision of this project is allow support for multiple types of applicable inputs into student mastery against learning objects.  For this project, the inputs are Revel quiz performance and Watson dialog interactions.  Future states could be Revel quiz performance, Watson 
+
   termsOfService: http://swagger.io/terms/
   contact:
     name: Pearson Cardinal Dashboard API
