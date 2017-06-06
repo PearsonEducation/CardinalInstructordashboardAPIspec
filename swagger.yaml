@@ -4,14 +4,7 @@ info:
   title: "Cardinal Instructor Dashboard"
   description: |
       The goal of this project is to provide more granular insights and visibility for instructors into student understanding of the learning objectives covered within their course sections.  Included within this supporting the following needs:
-      Quickly identify areas of need or support within their courses (answering the question - “Which learning objectives are my students struggling with?”).
-      
-        Identify trends across courses where students are students are collectively struggling (helping answer the question - “Is there an issue with the course content or instructional items being covered?”).
-      
-        Provide a more comprehensive view into student mastery of the applicable learning objectives.  Rather than simply look at student mastery scores based on quiz performance, also incorporate student dialog interactions with Watson as a secondary data point to view student mastery scores in order to determine benefits of Watson interaction, provide additional insights into student progression towards mastery, etc. 
-      
-        The long term vision of this project is allow support for multiple types of applicable inputs into student mastery against learning objects.  For this project, the inputs are Revel quiz performance and Watson dialog interactions.  Future states could be Revel quiz performance, Watson 
-
+     
   termsOfService: http://swagger.io/terms/
   contact:
     name: Pearson Cardinal Dashboard API
@@ -40,14 +33,38 @@ securityDefinitions:
         write: Grants write access
         admin: Grants read and write access to administrative information
 paths:
-  /:
+  /{system}/analytics/{contextType}/{ContextID}/{factType}/{factID}/:
     get:
       description: |
-        Returns all pets from the system that the user has access to
-        Nam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.
-        Sed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.
-      operationId: findPets
+        Returns the facts associated with a given context.
+        Examples: /revel/analytics/course/courseid/learningobjective/2094702384/mastery/watson
+      operationId: GetFacts
       parameters:
+        - name: system
+          in: path
+          description: the system we are requesting data from.  possible values "revel", "XL", "MX"
+          required: true
+          type: string
+        - name: contextType
+          in: path
+          description: contextType
+          required: true
+          type: string 
+        - name: ContextID
+          in: path
+          description: ContextID
+          required: true
+          type: string 
+        - name: factType
+          in: path
+          description: factType
+          required: true
+          type: string  
+        - name: factID
+          in: path
+          description: factID
+          required: true
+          type: string                   
         - name: tags
           in: query
           description: tags to filter by
@@ -64,42 +81,29 @@ paths:
           format: int32
       responses:
         200:
-          description: pet response
+          description: fact response
           schema:
             type: array
             items:
-              $ref: '#/definitions/Pet'
+              $ref: '#/definitions/Fact'
         default:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
-    post:
-      description: Creates a new pet in the store.  Duplicates are allowed
-      operationId: addPet
-      parameters:
-        - name: pet
-          in: body
-          description: Pet to add to the store
-          required: true
-          schema:
-            $ref: '#/definitions/NewPet'
-      responses:
-        200:
-          description: pet response
-          schema:
-            $ref: '#/definitions/Pet'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-  /pets/{id}:
+   
+  /{system}/analytics{id}:
     get:
       description: Returns a user based on a single ID, if the user does not have access to the pet
       operationId: find pet by id
       parameters:
+        - name: system
+          in: path
+          description: the system we are requesting data from.  possible values "revel", "XL", "MX"
+          required: true
+          type: string
         - name: id
           in: path
-          description: ID of pet to fetch
+          description: ID of fact to fetch
           required: true
           type: integer
           format: int64
@@ -107,15 +111,20 @@ paths:
         200:
           description: pet response
           schema:
-            $ref: '#/definitions/Pet'
+            $ref: '#/definitions/Fact'
         default:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
     delete:
-      description: deletes a single pet based on the ID supplied
-      operationId: deletePet
+      description: deletes 
+      operationId: delete
       parameters:
+        - name: system
+          in: path
+          description: the system we are requesting data from.  possible values "revel", "XL", "MX"
+          required: true
+          type: string
         - name: id
           in: path
           description: ID of pet to delete
@@ -130,16 +139,16 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 definitions:
-  Pet:
+  Fact:
     allOf:
-      - $ref: '#/definitions/NewPet'
+      - $ref: '#/definitions/NewFact'
       - required:
         - id
         properties:
           id:
             type: integer
             format: int64
-  NewPet:
+  NewFact:
     required:
       - name
     properties:
